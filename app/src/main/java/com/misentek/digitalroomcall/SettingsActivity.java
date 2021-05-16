@@ -30,10 +30,16 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.util.Calendar;
 
 import static com.misentek.digitalroomcall.MainActivity.activity;
@@ -150,12 +156,9 @@ public class SettingsActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-                // MainActivity.sendMessage("updateDate_"+newValue);
 
                 preferenceJam = getPreferenceManager().findPreference("jam");
                 if (preferenceJam != null) {
-
-
                     preferenceJam.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
@@ -237,6 +240,33 @@ public class SettingsActivity extends AppCompatActivity {
                                 .create();
                         dialog.show();
 
+                        return true;
+                    }
+                });
+
+                Preference preferenceCheckSWVersion = findPreference("apk_version");
+                preferenceCheckSWVersion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        BufferedReader in = null;
+                        String data = null;
+
+                        try{
+                            HttpClient httpclient = new DefaultHttpClient();
+
+                            HttpGet request = new HttpGet();
+                            URI website = new URI("http://alanhardin.comyr.com/matt24/matt28.php");
+                            request.setURI(website);
+                            HttpResponse response = httpclient.execute(request);
+                            in = new BufferedReader(new InputStreamReader(
+                                    response.getEntity().getContent()));
+
+                            // NEW CODE
+                            String line = in.readLine();
+                            Log.d(line);
+                        }catch(Exception e){
+                            Log.e("log_tag", "Error in http connection "+e.toString());
+                        }
                         return true;
                     }
                 });
