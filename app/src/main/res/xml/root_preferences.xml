@@ -1,0 +1,89 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="Waktu dan tanggal Digital Room Call">
+
+        <Preference
+            app:key="tanggal"
+            app:title="Tanggal"
+            app:useSimpleSummaryProvider="true" />
+        <Preference
+            app:key="jam"
+            app:title="Waktu"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+    <PreferenceCategory app:title="Volume Digital Room Call">
+        <Preference
+            app:key="volume"
+            app:title="Volume"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="Wifi">
+        <EditTextPreference
+            app:key="ssid"
+            app:title="SSID Perangkat"
+            app:defaultValue="Digital Room Call"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="password"
+            app:title="Kata sandi perangkat"
+            android:inputType="textPassword"
+            app:defaultValue="12345678"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="ipaddr"
+            app:title="Alamat IP Perangkat"
+            android:inputType="number"
+            app:defaultValue="192.168.43.142"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="Versi Aplikasi dan Firmware">
+        <Preference
+            android:key="apk_version"
+            android:summary="1.0"
+            android:title="Versi Aplikasi" />
+        <Preference
+            android:key="firm_version"
+            android:summary="1.0"
+            android:title="Versi Firmware" />
+        <Preference
+            android:key="checkforupdate_apk"
+            android:summary="Tidak ada pembaruan"
+            android:title="Cek Pembaruan Aplikasi" />
+        <Preference
+            android:key="checkforupdate_firmware"
+            android:summary="Tidak ada pembaruan firmware"
+            android:title="Cek Pembaruan Firmware" />
+
+    </PreferenceCategory>
+    <PreferenceCategory app:title="Memori">
+        <Preference
+            app:useSimpleSummaryProvider="true"
+            android:key="memory_type"
+            android:title="Tipe Memori" />
+        <Preference
+            android:key="memory_capacity"
+            android:title="Kapasitas Memori" />
+        <Preference
+            android:key="memory_used"
+            android:title="Memori Terpakai" />
+
+    </PreferenceCategory>
+    <PreferenceCategory app:title="Backup dan Restore">
+        <Preference
+            app:key="backup"
+            app:title="Backup"
+            app:useSimpleSummaryProvider="true" />
+
+        <Preference
+            app:key="restore"
+            app:title="Restore"
+            app:useSimpleSummaryProvider="true" />
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

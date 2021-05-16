@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.misentek.digitalroomcall.ui.home.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_manual"
+        android:name="com.misentek.digitalroomcall.ui.gallery.GalleryFragment"
+        android:label="@string/belmanual"
+        tools:layout="@layout/fragment_gallery" />
+    <fragment
+        android:id="@+id/nav_ruangan"
+        android:name="com.misentek.digitalroomcall.ui.ruangan.RuanganFragment"
+        android:label="@string/ruangan"
+        tools:layout="@layout/fragment_ruangan" />
+
+    <fragment
+        android:id="@+id/nav_jadwal"
+        android:name="com.misentek.digitalroomcall.ui.jadwal.JadwalFragment"
+        android:label="@string/jadwal"
+        tools:layout="@layout/fragment_jadwal" />
+    <fragment
+        android:id="@+id/nav_tambah_jadwal"
+        android:name="com.misentek.digitalroomcall.ui.tambahjadwal.TambahJadwalFragment"
+        android:label="Tambah Jadwal"
+        tools:layout="@layout/fragment_tambah_jadwal" />
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.misentek.digitalroomcall.SettingsActivity$SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/settings_activity" />
+    <fragment
+        android:id="@+id/nav_nada"
+        android:name="com.misentek.digitalroomcall.ui.nada.NadaFragment"
+        android:label="@string/nada"
+        tools:layout="@layout/fragment_nada" />
+</navigation>

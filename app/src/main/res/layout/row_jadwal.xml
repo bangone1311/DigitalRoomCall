@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    android:focusable="true"
+    android:clickable="true"
+    android:id="@+id/container_jadwal">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        android:padding="5dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:drawableLeft="@drawable/ic_baseline_music_note_24"
+                android:layout_gravity="center"
+                android:id="@+id/txt_nada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceCaption" />
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/txt_jam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceHeadline3"/>
+
+            <TextView
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/txt_jam"
+                android:id="@+id/txt_nama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:layout_toEndOf="@id/txt_jam" />
+
+            <LinearLayout
+                android:layout_below="@id/txt_jam"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_hari_senin"
+                    android:text="@string/senin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="#9e9e9e"
+                    android:textAppearance="?attr/textAppearanceBody2"  />
+                <TextView
+                    android:id="@+id/txt_hari_selasa"
+                    android:text="@string/selasa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="#9e9e9e"
+                    android:textAppearance="?attr/textAppearanceBody2"  />
+                <TextView
+                    android:id="@+id/txt_hari_rabu"
+                    android:text="@string/rabu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="#9e9e9e"
+                    android:textAppearance="?attr/textAppearanceBody2"  />
+                <TextView
+                    android:id="@+id/txt_hari_kamis"
+                    android:text="@string/kamis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="#9e9e9e"
+                    android:textAppearance="?attr/textAppearanceBody2"  />
+                <TextView
+                    android:id="@+id/txt_hari_jumat"
+                    android:text="@string/jumat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="#9e9e9e"
+                    android:textAppearance="?attr/textAppearanceBody2"  />
+                <TextView
+                    android:id="@+id/txt_hari_sabtu"
+                    android:text="@string/sabtu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="#9e9e9e"
+                    android:textAppearance="?attr/textAppearanceBody2"  />
+                <TextView
+
+                    android:id="@+id/txt_hari_minggu"
+                    android:text="@string/minggu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="#9e9e9e"
+                    android:textAppearance="?attr/textAppearanceBody2"  />
+
+
+            </LinearLayout>
+
+
+            <Switch
+                android:id="@+id/switchEnabled"
+                android:checked="true"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:layout_height="50dp"
+                tools:ignore="UseSwitchCompatOrMaterialXml"
+                android:layout_width="100dp"
+                android:layout_marginEnd="20dp" />
+            <Button
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/switchEnabled"
+                android:id="@+id/btn_ruangan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?attr/materialButtonOutlinedStyle" />
+        </RelativeLayout>
+
+
+
+        <!-- TextView NoHp Mahasiswa -->
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
