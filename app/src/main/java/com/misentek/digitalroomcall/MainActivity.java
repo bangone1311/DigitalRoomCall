@@ -456,26 +456,27 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if (message.startsWith("speakerstate__")){
                             String msg = message.replace("speakerstate__","");
-                            String roomsname = msg.split(";")[1];
-
-
-                            if (roomsname!=null && !roomsname.equals("")){
-                                ArrayList<View> viewArrayList = new ArrayList<>();
-                                if (materialButtonToggleGroup!=null){
-                                    materialButtonToggleGroup.findViewsWithText(viewArrayList,roomsname.trim().toLowerCase(),View.FIND_VIEWS_WITH_TEXT);
-                                    if (viewArrayList.size()>0 && msg.startsWith("speaker_on")){
-                                        for (int x=0;x<viewArrayList.size();x++){
-                                            int id=viewArrayList.get(x).getId();
-                                            Button button=materialButtonToggleGroup.findViewById(id);
-                                            if (button.getText().toString().trim().toLowerCase().equals(roomsname.trim().toLowerCase())){
-                                                materialButtonToggleGroup.check(id);
+                            if (!msg.equals("")){
+                                String roomsname = msg.split(";")[1];
+                                if (roomsname!=null && !roomsname.equals("")){
+                                    ArrayList<View> viewArrayList = new ArrayList<>();
+                                    if (materialButtonToggleGroup!=null){
+                                        materialButtonToggleGroup.findViewsWithText(viewArrayList,roomsname.trim().toLowerCase(),View.FIND_VIEWS_WITH_TEXT);
+                                        if (viewArrayList.size()>0 && msg.startsWith("speaker_on")){
+                                            for (int x=0;x<viewArrayList.size();x++){
+                                                int id=viewArrayList.get(x).getId();
+                                                Button button=materialButtonToggleGroup.findViewById(id);
+                                                if (button.getText().toString().trim().toLowerCase().equals(roomsname.trim().toLowerCase())){
+                                                    materialButtonToggleGroup.check(id);
+                                                }
                                             }
+
                                         }
-
                                     }
-                                }
 
+                                }
                             }
+
 
 
                         }

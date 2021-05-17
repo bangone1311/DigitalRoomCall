@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -41,6 +43,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static com.misentek.digitalroomcall.MainActivity.activity;
 import static com.misentek.digitalroomcall.MainActivity.c;
@@ -236,7 +245,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     Intent in = new Intent(Intent.ACTION_GET_CONTENT).setType("*/*");
                                     startActivityForResult(Intent.createChooser(in,"Pilih file backup"), 15);
                                 })
-                                .setNegativeButton("Cancel", null)
+                                .setNegativeButton("Batal", null)
                                 .create();
                         dialog.show();
 
@@ -244,29 +253,50 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 });
 
-                Preference preferenceCheckSWVersion = findPreference("apk_version");
-                preferenceCheckSWVersion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                Preference preferenceCheckFWVersion = findPreference("checkforupdate_firmware");
+                preferenceCheckFWVersion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                     @Override
                     public boolean onPreferenceClick(Preference preference) {
-                        BufferedReader in = null;
-                        String data = null;
-
-                        try{
-                            HttpClient httpclient = new DefaultHttpClient();
-
-                            HttpGet request = new HttpGet();
-                            URI website = new URI("http://alanhardin.comyr.com/matt24/matt28.php");
-                            request.setURI(website);
-                            HttpResponse response = httpclient.execute(request);
-                            in = new BufferedReader(new InputStreamReader(
-                                    response.getEntity().getContent()));
-
-                            // NEW CODE
-                            String line = in.readLine();
-                            Log.d(line);
-                        }catch(Exception e){
-                            Log.e("log_tag", "Error in http connection "+e.toString());
+                        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+                        if (SDK_INT > 8) {
+                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                                    .permitAll().build();
+                            StrictMode.setThreadPolicy(policy);
                         }
+                        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+                        builder.connectTimeout(5, TimeUnit.SECONDS);
+                        builder.readTimeout(5, TimeUnit.SECONDS);
+                        builder.writeTimeout(5, TimeUnit.SECONDS);
+                        OkHttpClient client = builder.build();
+                        Request request = new Request.Builder()
+                                //.url("https://publicobject.com/helloworld.txt")
+                                .url("https://raw.githubusercontent.com/bangone1311/msas/master/versioning.txt")
+                                .build();
+                        client.newCall(request).enqueue(new Callback() {
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                try {
+                                    if (response.isSuccessful()) {
+                                        String responseString = response.body().string();
+                                        Log.d("fak", responseString);
+                                        responseAsync(responseString);
+                                    } else {
+                                        Log.d("fak", "Error "+ response);
+                                        responseAsync("Error "+ response);
+                                    }
+                                } catch (IOException e) {
+                                    Log.d("fak", "Exception caught : ", e);
+                                    responseAsync("Error "+ e.getMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Log.d("fak", "Request Failed."+e.getMessage());
+                                responseAsync("Request Failed."+e.getMessage());
+                                e.printStackTrace();
+                            }
+                        });
                         return true;
                     }
                 });
@@ -320,6 +350,28 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 });
 
+                Preference reset =findPreference("reset");
+                reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        AlertDialog dialog = new AlertDialog.Builder(activity)
+                                .setTitle("Peringatan")
+                                .setMessage("Anda akan menghapus semua data jadwal, ruangan, dll. lanjutkan?")
+                                .setPositiveButton("Reset", (dialog1, which) -> {
+                                    String listFiles[] = {"/speakerstate.txt","/f.txt","/rooms.txt", "/namarooms.txt", "/wifi.txt"};
+                                    for (int x=0;x<listFiles.length;x++){
+                                        sendMessage("restore_"+listFiles[x]+"~");
+                                        Toast.makeText(activity,"Reset data berhasil",Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .setNegativeButton("Batal", null)
+                                .create();
+                        dialog.show();
+
+                        return true;
+                    }
+                });
+
             }
 
             return super.onCreateView(inflater, container, savedInstanceState);
@@ -327,6 +379,35 @@ public class SettingsActivity extends AppCompatActivity {
 
         public static void callback(){
 
+        }
+
+        private void responseAsync(final String responseStr) {
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    String apkVer = preferences.getString("firm_version","1.0");
+                    if (responseStr.equals(apkVer)){
+                        Toast.makeText(activity.getApplicationContext(), "Firmware anda sudah yang terbaru", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Preference swVer = findPreference("firm_version");
+                        swVer.setSummary(responseStr);
+                        AlertDialog dialog = new AlertDialog.Builder(activity)
+                                .setTitle("Peringatan")
+                                .setMessage("Pastikan anda telah membackup data sebelum memperbarui firmware")
+                                .setPositiveButton("Perbarui", (dialog1, which) -> {
+                                    sendMessage("updateFW_");
+                                })
+                                .setNegativeButton("Batal", null)
+                                .create();
+                        dialog.show();
+                    }
+
+
+
+
+
+                }
+            });
         }
     }
 }

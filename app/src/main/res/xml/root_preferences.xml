@@ -40,8 +40,12 @@
             app:defaultValue="192.168.43.142"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
-    <PreferenceCategory app:title="Versi Aplikasi dan Firmware">
+    <PreferenceCategory
+
+        app:isPreferenceVisible="false"
+        app:title="Versi Aplikasi dan Firmware">
         <Preference
+            app:isPreferenceVisible="false"
             android:key="apk_version"
             android:summary="1.0"
             android:title="Versi Aplikasi" />
@@ -50,6 +54,7 @@
             android:summary="1.0"
             android:title="Versi Firmware" />
         <Preference
+            app:isPreferenceVisible="false"
             android:key="checkforupdate_apk"
             android:summary="Tidak ada pembaruan"
             android:title="Cek Pembaruan Aplikasi" />
@@ -83,6 +88,13 @@
             app:title="Restore"
             app:useSimpleSummaryProvider="true" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Reset Setelan Pabrik">
+        <Preference
+            app:key="reset"
+            app:title="Reset"
+            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
